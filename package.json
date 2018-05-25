@@ -1,0 +1,29 @@
+{
+  "name": "armstrong",
+  "version": "1.0.0",
+  "description": "Adds rich job control, composition, and monitoring on top of an ordinary queue.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/passcod/armstrong.git"
+  },
+  "keywords": [
+    "gearman",
+    "job",
+    "queue",
+    "workflows",
+    "pipelines"
+  ],
+  "author": "Félix Saparelli <felix@passcod.name> (https://passcod.name)",
+  "license": "Artistic-2.0",
+  "bugs": {
+    "url": "https://github.com/passcod/armstrong/issues"
+  },
+  "homepage": "https://github.com/passcod/armstrong#readme",
+  "dependencies": {
+    "yargs": "^11.0.0"
+  }
+}
