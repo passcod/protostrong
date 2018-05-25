@@ -1,0 +1,7 @@
+# redis = localhost:6379
+# redis = 10.20.30.40:6379
+# redis = redis://localhost:6379/db
+# redis = redis://:password@localhost:6379
+
+# gearman = localhost:4730
+# gearman = 10.20.30.40:4730

@@ -4,7 +4,7 @@
   "description": "Adds rich job control, composition, and monitoring on top of an ordinary queue.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "env TEST=1 tap 'test/**/!(_*).js' --100"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,14 @@
   },
   "homepage": "https://github.com/passcod/armstrong#readme",
   "dependencies": {
+    "redis": "^2.8.0",
+    "redis-url": "^1.2.1",
+    "signale": "^1.1.0",
+    "toml": "^2.3.3",
     "yargs": "^11.0.0"
+  },
+  "devDependencies": {
+    "require-uncached": "^1.0.3",
+    "tap": "^12.0.1"
   }
 }

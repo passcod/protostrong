@@ -9,8 +9,10 @@ const argv = yargs
     console.log('elsif running from npm/npx context, run agent')
     console.log('otherwise, display help')
   })
-  .command(['agent', 'a'], 'Run the agent', () => {}, (argv) => {
+  .command(['agent', 'a'], 'Run the agent', () => {}, async (argv) => {
     console.log('retrieve config')
+    const config = await require('./lib/config')().catch(console.error)
+
     console.log('connect to backends')
     console.log('start the agent')
     console.log('start the api')
@@ -29,20 +31,26 @@ const argv = yargs
     console.log('enable systemd unit')
     console.log('start systemd unit')
   })
-  .command(['run', 'r'], 'Launch a job', () => {}, (argv) => {
+  .command(['run', 'r'], 'Launch a job', () => {}, async (argv) => {
     // takes an -i option for "interactive specifying of a job",
     // also aliased to the ri command.
     console.log('retrieve config')
+    const config = await require('./lib/config')().catch(console.error)
+
     console.log('connect to agent')
     console.log('launch a job')
   })
-  .command(['monitor', 'm'], 'Check on jobs and system status', () => {}, (argv) => {
+  .command(['monitor', 'm'], 'Check on jobs and system status', () => {}, async (argv) => {
     console.log('retrieve config')
+    const config = await require('./lib/config')().catch(console.error)
+
     console.log('connect to agent')
     console.log('print out info')
   })
-  .command(['wait', 'w'], 'Wait on a job or jobs', () => {}, (argv) => {
+  .command(['wait', 'w'], 'Wait on a job or jobs', () => {}, async (argv) => {
     console.log('retrieve config')
+    const config = await require('./lib/config')().catch(console.error)
+
     console.log('connect to agent')
     console.log('check on job(s)')
     console.log('print info on job')
