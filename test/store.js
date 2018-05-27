@@ -16,6 +16,12 @@ test('creates an in-memory store if no store is writable', async (t) => {
   t.done()
 })
 
+test('creates an in-memory store if asked', async (t) => {
+  const store = await uncached('../lib/store')(true)
+  t.same(store.persistent, false)
+  t.done()
+})
+
 test('returns same instance if called twice', async (t) => {
   process.env.ARMSTRONG_STORE = null
   process.env.npm_config_armstrong_store = null

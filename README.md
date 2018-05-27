@@ -25,7 +25,7 @@ interface is available](./docs/backend-interface.md).
 ## Try
 
 1. Install and start Gearman
-2. Run: `npx armstrong agent`
+2. Run: `npx armstrong agent --volatile`
 3. Open http://localhost:1967/
 
 ## Install (guided)

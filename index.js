@@ -6,8 +6,11 @@ const { $trace, $info, $fatal } = require('./lib/logger')('main')
 const argv = yargs
   .usage('Usage: $0 <command>')
   .command('agent', 'Run the agent', (yargs) => yargs
+    .option('volatile', { description: 'Force in-memory store', type: 'boolean' })
     .help().alias('help', 'h').version(false)
   , async (argv) => {
+    $trace(argv)
+
     $info('retrieve config')
     const config = await require('./lib/config')().catch((e) => {
       $fatal(e)
@@ -15,12 +18,12 @@ const argv = yargs
     })
 
     $info('open store')
-    const store = await require('./lib/store')().catch((e) => {
+    const store = await require('./lib/store')(argv.volatile).catch((e) => {
       $fatal(e)
       process.exit(1)
     })
 
-    $info('connect to backends')
+    $info('connect to gearman')
     $info('start the agent')
     // listen on armstrong::job
     // when a job comes in, place it and launch it. Synchronous. On its own
@@ -29,7 +32,7 @@ const argv = yargs
     // Notify any watchers. Run the concurrency control logic built in here.
 
     // "place it"
-    // Send N 'armstrong::nodeid::placement#jobid' where N = number of nodes
+    // Send N 'armstrong::node::id::placement#jobid' where N = number of nodes
     // These instruct nodes to start handlers for specified functions,
     // namespaced under the job id, according to constraints. Sender listens
     // for results and computes whether capacity placed is enough. If not, it
