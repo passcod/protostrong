@@ -1,16 +1,27 @@
 #!/usr/bin/env node
 const yargs = require('yargs')
 const pkg = require('./package.json')
+const { $trace, $info, $fatal } = require('./lib/logger')('main')
 
 const argv = yargs
+  .usage('Usage: $0 <command>')
   .command('agent', 'Run the agent', (yargs) => yargs
     .help().alias('help', 'h').version(false)
   , async (argv) => {
-    console.log('retrieve config')
-    const config = await require('./lib/config')().catch(console.error)
+    $info('retrieve config')
+    const config = await require('./lib/config')().catch((e) => {
+      $fatal(e)
+      process.exit(1)
+    })
 
-    console.log('connect to backends')
-    console.log('start the agent')
+    $info('open store')
+    const store = await require('./lib/store')().catch((e) => {
+      $fatal(e)
+      process.exit(1)
+    })
+
+    $info('connect to backends')
+    $info('start the agent')
     // listen on armstrong::job
     // when a job comes in, place it and launch it. Synchronous. On its own
     // thread/promise. Monitor its handle for progress or activity or being
@@ -25,8 +36,8 @@ const argv = yargs
     // places again. If yes, it triggers the launch. After job is done or
     // placements on nodes have idled for too long, they're cleaned up.
 
-    console.log('start the api')
-    console.log('start the web ui')
+    $info('start the api')
+    $info('start the web ui')
     // the web UI not only monitors, but also provides history and graphs, and
     // most importantly allows a user to launch a job directly from the UI, or
     // to stop it, pause a workflow, resume, restart, retry, etc. It can even
@@ -35,24 +46,24 @@ const argv = yargs
   .command('install', 'Install the agent globally', (yargs) => yargs
     .help().alias('help', 'h').version(false)
   , (argv) => {
-    console.log('check what\'s there')
-    console.log('check backends')
-    console.log('ask for config')
-    console.log('check config')
-    console.log('ask for confirm')
+    $info('check what\'s there')
+    $info('check backends')
+    $info('ask for config')
+    $info('check config')
+    $info('ask for confirm')
 
-    console.log('obtain root')
-    console.log('install systemd unit')
-    console.log('install configuration')
-    console.log('enable systemd unit')
-    console.log('start systemd unit')
+    $info('obtain root')
+    $info('install systemd unit')
+    $info('install configuration')
+    $info('enable systemd unit')
+    $info('start systemd unit')
   })
   .command('monitor', 'Check on jobs and system status', (yargs) => yargs, async (argv) => {
-    console.log('retrieve config')
+    $info('retrieve config')
     const config = await require('./lib/config')().catch(console.error)
 
-    console.log('connect to agent')
-    console.log('print out info')
+    $info('connect to agent')
+    $info('print out info')
   })
   .command('run', 'Launch a job', (yargs) => yargs
     .option('interactive', { alias: 'i', type: 'boolean' })
@@ -61,13 +72,13 @@ const argv = yargs
     .option('resume', { type: 'string' })
     .help().alias('help', 'h').version(false)
   , async (argv) => {
-    console.log(argv)
+    $trace(argv)
 
-    console.log('retrieve config')
+    $info('retrieve config')
     const config = await require('./lib/config')().catch(console.error)
 
-    console.log('connect to agent')
-    console.log('launch a job')
+    $info('connect to agent')
+    $info('launch a job')
     // wrap actual job details in metadata, then send it to armstrong::job
   })
   .command('stop', 'Stop a job', (yargs) => yargs
@@ -76,22 +87,22 @@ const argv = yargs
     .option('kill') // kill handlers, cleanup queue
     .help().alias('help', 'h').version(false)
   , async (argv) => {
-    console.log('retrieve config')
+    $info('retrieve config')
     const config = await require('./lib/config')().catch(console.error)
 
-    console.log('connect to agent')
-    console.log('send a stop request')
+    $info('connect to agent')
+    $info('send a stop request')
   })
   .command('wait', 'Wait on a job or jobs', (yargs) => yargs, async (argv) => {
-    console.log('retrieve config')
+    $info('retrieve config')
     const config = await require('./lib/config')().catch(console.error)
 
-    console.log('connect to agent')
-    console.log('check on job(s)')
-    console.log('print info on job')
-    console.log('block until they are finished')
-    console.log('print progress as it comes through')
-    console.log('print result and status once done')
+    $info('connect to agent')
+    $info('check on job(s)')
+    $info('print info on job')
+    $info('block until they are finished')
+    $info('print progress as it comes through')
+    $info('print result and status once done')
 
     // a sync job is really just a normal job immediately waited upon. There's
     // no concept of background job as a separate category. A job can be waited
