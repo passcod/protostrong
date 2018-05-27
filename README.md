@@ -30,7 +30,7 @@ But it is designed to be agnostic to those components.
 ## Try
 
 1. Install and start Gearman and Redis
-2. Run: `npx armstrong`
+2. Run: `npx armstrong agent`
 3. Open http://localhost:1967/
 
 ## Install (guided)
