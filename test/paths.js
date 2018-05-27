@@ -47,3 +47,34 @@ test('config path', async (t) => {
   process.chdir(cwd)
   t.done()
 })
+
+test('store path', async (t) => {
+  process.env.ARMSTRONG_STORE = null
+  process.env.npm_config_armstrong_store = null
+  const cwd = process.cwd()
+  process.chdir(join(__dirname, 'config'))
+  await t.rejects(uncached('../lib/paths').store(), 'should fail if no writable path is found')
+
+  process.env.ARMSTRONG_STORE = __dirname
+  t.same(await uncached('../lib/paths').store(), __dirname, 'finds a store from env')
+  process.env.ARMSTRONG_STORE = null
+
+  process.env.npm_config_armstrong_store = __dirname
+  t.same(await uncached('../lib/paths').store(), __dirname, 'finds a store from npm')
+  process.env.npm_config_armstrong_store = null
+
+  process.chdir(__dirname)
+  t.same(await uncached('../lib/paths').store(), join(__dirname, 'store.db'), 'finds a store in cwd')
+  process.chdir(join(__dirname, 'config'))
+
+  const home = process.env.HOME
+  process.env.HOME = __dirname
+  t.same(await uncached('../lib/paths').store(), join(__dirname, 'store.db'), 'finds a store in home')
+  process.env.HOME = home
+
+  await require('../lib/paths').store()
+  t.ok(await require('../lib/paths').store(), 'test cache')
+
+  process.chdir(cwd)
+  t.done()
+})
