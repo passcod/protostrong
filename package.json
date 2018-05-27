@@ -29,6 +29,7 @@
     "leveldown": "^4.0.1",
     "levelup": "^3.0.1",
     "memdown": "^3.0.0",
+    "nanoid": "^1.0.2",
     "signale": "^1.1.0",
     "toml": "^2.3.3",
     "yargs": "^11.0.0"

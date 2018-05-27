@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const yargs = require('yargs')
 const pkg = require('./package.json')
-const { $trace, $info, $fatal } = require('./lib/logger')('main')
+const { $trace, $debug, $info, $fatal } = require('./lib/logger')('main')
 
 const argv = yargs
   .usage('Usage: $0 <command>')
@@ -24,6 +24,9 @@ const argv = yargs
     })
 
     $info('connect to gearman')
+    const queue = await require('./lib/queue/gearman')()
+    setTimeout(async () => $debug(await queue.nodes()), 500)
+
     $info('start the agent')
     // listen on armstrong::job
     // when a job comes in, place it and launch it. Synchronous. On its own
