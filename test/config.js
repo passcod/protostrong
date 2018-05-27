@@ -16,6 +16,11 @@ test('with override', async (t) => {
   t.done()
 })
 
+test('with unknown queue type', (t) => {
+  t.rejects(uncached('../lib/config')(join(__dirname, 'config/whatqueue.toml')))
+  t.done()
+})
+
 test('with arbitrary key', async (t) => {
   const config = await uncached('../lib/config')(join(__dirname, 'config/arbitrary.toml'))
 
