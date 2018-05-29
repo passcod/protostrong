@@ -27,8 +27,8 @@
     "node": ">=10.0.0"
   },
   "dependencies": {
-    "abraxas": "^2.1.10",
     "encoding-down": "^5.0.2",
+    "gearman": "^2.0.5",
     "leveldown": "^4.0.1",
     "levelup": "^3.0.1",
     "memdown": "^3.0.0",
