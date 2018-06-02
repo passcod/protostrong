@@ -2,11 +2,7 @@
 
 _A job framework for a wonderful world._
 
-Adds rich job control, composition, and monitoring on top of an ordinary queue.
-
-Built on top of [Gearman], but could support different backend queues without
-too much effort. Pull requests doing so are welcome, and [documentation for the
-backend interface is available](./docs/backend-interface.md).
+Adds rich job control, composition, and monitoring on top of a [Gearman] queue.
 
 [Gearman]: http://gearman.org
 
@@ -51,6 +47,7 @@ TODO: in their own pages
 - [Protocol documentation]
 - [Production recommendations]
 - [Manual install]
+- [Using another backing queue]
 
 ### Install (manual)
 
