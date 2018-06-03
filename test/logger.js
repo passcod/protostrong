@@ -46,6 +46,25 @@ test('formats Error inputs', (t) => {
   stream.end()
 })
 
+// Errors from TOML (via PEG.js) don't have a .stack on SyntaxErrors
+test('normalises Errors with no stack', (t) => {
+  const stream = new WritableMock()
+  const log = logger('test', stream)
+
+  stream.on('finish', () => {
+    t.match(
+      encodeURIComponent(stream.data.toString().split('\n')[0]),
+      '%5Btest%5D%20%E2%80%BA%20error%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Error%3A%20baz%20'
+    )
+    t.done()
+  })
+
+  const err = new Error('baz')
+  err.stack = undefined
+  log.$error(err)
+  stream.end()
+})
+
 test('$ shorthand returns first argument', (t) => {
   const { $ } = logger('test')
 
