@@ -27,8 +27,12 @@
     "node": ">=10.0.0"
   },
   "dependencies": {
+    "bytes": "^3.0.0",
     "encoding-down": "^5.0.3",
     "gearman": "github:mreinstein/node-gearman",
+    "is-cidr": "^2.0.5",
+    "is-domain-name": "^1.0.1",
+    "is-ip": "^2.0.0",
     "leveldown": "^4.0.1",
     "levelup": "^3.0.1",
     "memdown": "^3.0.0",
